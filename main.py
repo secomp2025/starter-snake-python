@@ -1,98 +1,96 @@
-# Welcome to
+# Bem-vindo ao
 # __________         __    __  .__                               __
 # \______   \_____ _/  |__/  |_|  |   ____   ______ ____ _____  |  | __ ____
 #  |    |  _/\__  \\   __\   __\  | _/ __ \ /  ___//    \\__  \ |  |/ // __ \
 #  |    |   \ / __ \|  |  |  | |  |_\  ___/ \___ \|   |  \/ __ \|    <\  ___/
 #  |________/(______/__|  |__| |____/\_____>______>___|__(______/__|__\\_____>
 #
-# This file can be a nice home for your Battlesnake logic and helper functions.
+# Este arquivo pode ser um bom local para a lógica e funções auxiliares do seu Battlesnake.
 #
-# To get you started we've included code to prevent your Battlesnake from moving backwards.
-# For more info see docs.battlesnake.com
+# Para começar, incluímos um código para impedir que seu Battlesnake se mova para trás.
+# Para mais informações, veja docs.battlesnake.com
 
 import random
 import typing
 
 
-# info is called when you create your Battlesnake on play.battlesnake.com
-# and controls your Battlesnake's appearance
-# TIP: If you open your Battlesnake URL in a browser you should see this data
+# info é chamado quando você cria seu Battlesnake em play.battlesnake.com
+# e controla a aparência do seu Battlesnake
 def info() -> typing.Dict:
     print("INFO")
 
     return {
-        "apiversion": "1",
-        "author": "",  # TODO: Your Battlesnake Username
-        "color": "#888888",  # TODO: Choose color
-        "head": "default",  # TODO: Choose head
-        "tail": "default",  # TODO: Choose tail
+        "author": "",  # Coloque o nome do seu time
+        "color": "#F30303",  # Escolha uma cor
+        "head": "default",  # Escolha uma cabeça
+        "tail": "default",  # Escolha uma cauda
     }
 
 
-# start is called when your Battlesnake begins a game
+# start é chamado quando seu Battlesnake inicia uma partida
 def start(game_state: typing.Dict):
-    print("GAME START")
+    print("INÍCIO DO JOGO")
 
 
-# end is called when your Battlesnake finishes a game
+# end é chamado quando seu Battlesnake termina uma partida
 def end(game_state: typing.Dict):
-    print("GAME OVER\n")
+    print("FIM DO JOGO\n")
 
 
-# move is called on every turn and returns your next move
-# Valid moves are "up", "down", "left", or "right"
-# See https://docs.battlesnake.com/api/example-move for available data
+# move é chamado a cada turno e retorna o seu próximo movimento
+# Movimentos válidos são "up", "down", "left" ou "right"
+# Veja https://docs.battlesnake.com/api/example-move para os dados disponíveis
 def move(game_state: typing.Dict) -> typing.Dict:
 
     is_move_safe = {"up": True, "down": True, "left": True, "right": True}
 
-    # We've included code to prevent your Battlesnake from moving backwards
-    my_head = game_state["you"]["body"][0]  # Coordinates of your head
-    my_neck = game_state["you"]["body"][1]  # Coordinates of your "neck"
+    # Incluímos código para impedir seu Battlesnake de andar para trás
+    my_head = game_state["you"]["body"][0]  # Coordenadas da cabeça
+    my_neck = game_state["you"]["body"][1]  # Coordenadas do "pescoço"
 
-    if my_neck["x"] < my_head["x"]:  # Neck is left of head, don't move left
+    if my_neck["x"] < my_head["x"]:  # Pescoço está à esquerda da cabeça, não vá para a esquerda
         is_move_safe["left"] = False
 
-    elif my_neck["x"] > my_head["x"]:  # Neck is right of head, don't move right
+    elif my_neck["x"] > my_head["x"]:  # Pescoço está à direita da cabeça, não vá para a direita
         is_move_safe["right"] = False
 
-    elif my_neck["y"] < my_head["y"]:  # Neck is below head, don't move down
+    elif my_neck["y"] < my_head["y"]:  # Pescoço está abaixo da cabeça, não vá para baixo
         is_move_safe["down"] = False
 
-    elif my_neck["y"] > my_head["y"]:  # Neck is above head, don't move up
+    elif my_neck["y"] > my_head["y"]:  # Pescoço está acima da cabeça, não vá para cima
         is_move_safe["up"] = False
 
-    # TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
+    # TODO: Etapa 1 - Impedir que o Battlesnake saia dos limites do tabuleiro
     # board_width = game_state['board']['width']
     # board_height = game_state['board']['height']
 
-    # TODO: Step 2 - Prevent your Battlesnake from colliding with itself
+    # TODO: Etapa 2 - Impedir que o Battlesnake colida com ele mesmo
     # my_body = game_state['you']['body']
 
-    # TODO: Step 3 - Prevent your Battlesnake from colliding with other Battlesnakes
+    # TODO: Etapa 3 - Impedir que o Battlesnake colida com outros Battlesnakes
     # opponents = game_state['board']['snakes']
 
-    # Are there any safe moves left?
+    # Existem movimentos seguros disponíveis?
     safe_moves = []
     for move, isSafe in is_move_safe.items():
         if isSafe:
             safe_moves.append(move)
 
     if len(safe_moves) == 0:
-        print(f"MOVE {game_state['turn']}: No safe moves detected! Moving down")
+        print(f"MOVIMENTO {game_state['turn']}: Nenhum movimento seguro detectado! Indo para baixo")
         return {"move": "down"}
 
-    # Choose a random move from the safe ones
+    # Escolhe um movimento aleatório entre os seguros
     next_move = random.choice(safe_moves)
 
-    # TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
+    # TODO: Etapa 4 - Ir em direção à comida em vez de aleatoriamente, para recuperar saúde e sobreviver mais
     # food = game_state['board']['food']
 
-    print(f"MOVE {game_state['turn']}: {next_move}")
+    print(f"MOVIMENTO {game_state['turn']}: {next_move}")
     return {"move": next_move}
 
 
-# Start server when `python main.py` is run
+# Inicia o servidor quando `python main.py` é executado
 if __name__ == "__main__":
     from server import run_server
 
