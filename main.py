@@ -41,7 +41,6 @@ def end(game_state: typing.Dict):
 # Movimentos válidos são "up", "down", "left" ou "right"
 # Veja https://docs.battlesnake.com/api/example-move para os dados disponíveis
 def move(game_state: typing.Dict) -> typing.Dict:
-
     is_move_safe = {"up": True, "down": True, "left": True, "right": True}
 
     # Incluímos código para impedir seu Battlesnake de andar para trás
@@ -83,7 +82,8 @@ def move(game_state: typing.Dict) -> typing.Dict:
     # Escolhe um movimento aleatório entre os seguros
     next_move = random.choice(safe_moves)
 
-    # TODO: Etapa 4 - Ir em direção à comida em vez de aleatoriamente, para recuperar saúde e sobreviver mais
+    # TODO: Etapa 4 - Ir em direção à comida em vez de aleatoriamente, para recuperar saúde e 
+    # sobreviver mais
     # food = game_state['board']['food']
 
     print(f"MOVIMENTO {game_state['turn']}: {next_move}")
