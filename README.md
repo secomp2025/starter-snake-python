@@ -1,4 +1,3 @@
-````markdown
 # Projeto Inicial Battlesnake Python
 
 Um modelo não oficial do Battlesnake escrito em Python. Comece em [play.battlesnake.com](https://play.battlesnake.com).
@@ -39,4 +38,3 @@ Comando para executar um jogo local
 ```sh
 battlesnake play -W 11 -H 11 --name 'Python Starter Project' --url http://localhost:8000 -g solo --browser
 ```
-
