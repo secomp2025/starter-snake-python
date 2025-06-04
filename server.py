@@ -14,6 +14,7 @@ def run_server(handlers: typing.Dict):
     def on_info():
         info = handlers["info"]()
         info["apiversion"] = "1"
+        return info
 
     @app.post("/start")
     def on_start():
