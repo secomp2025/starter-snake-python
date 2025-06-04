@@ -5,8 +5,9 @@ import typing
 from flask import Flask
 from flask import request
 
-
 def run_server(handlers: typing.Dict):
+    # os.environ["PORT"] = "5000"
+
     app = Flask("Battlesnake")
 
     @app.get("/")
